@@ -62,8 +62,8 @@ class Stock:
         df['MACD'] = df[f'EMA{fast}'] - df[f'EMA{slow}']
         df['sline'] = df['MACD'].ewm(span=signal, adjust=False).mean()
 
-        macd = round(float(self.df['MACD'].tail(1)),2)
-        signal = round(float(self.df['sline'].tail(1)),2)
+        macd = round(float(self.df['MACD'].iloc[-1]),2)
+        signal = round(float(self.df['sline'].iloc[-1]),2)
         return [macd,signal]
 
 
@@ -74,9 +74,9 @@ class Stock:
         df['BB_UPPER'] = df['SMA'] + 2 * df['SD']
         df['BB_LOWER'] = df['SMA'] - 2 * df['SD']
 
-        bb_upper = round(float(df['BB_UPPER'].tail(1)),2)
-        bb_lower = round(float(df['BB_LOWER'].tail(1)),2)
-        bb_mean = round(float(df['SMA'].tail(1)),2)
+        bb_upper = round(float(df['BB_UPPER'].iloc[-1]),2)
+        bb_lower = round(float(df['BB_LOWER'].iloc[-1]),2)
+        bb_mean = round(float(df['SMA'].iloc[-1]),2)
 
         return [ bb_lower, bb_mean, bb_upper]
     

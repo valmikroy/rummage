@@ -23,9 +23,6 @@ RUN apt update && apt upgrade -y && \
 
 # Copy the requirements file to the working directory
 COPY requirements.txt .
-#COPY build.sh .
-
-#RUN  bash build.sh 
 
 # Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
