@@ -3,6 +3,7 @@ import pandas as pd
 import os 
 
 from findash.data import TickerData
+from findash.data import FredData
 from mock import patch
 
 from dotenv import load_dotenv
@@ -24,3 +25,18 @@ class TestTicker(unittest.TestCase):
         
     def testLastData(self):
         self.assertEqual(self.ticker.last_price(),591.24)
+
+
+
+
+class TestFred(unittest.TestCase):
+    def setUp(self) -> None:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        test_data = dir_path + "/fixtures/DFII10.data"
+        with patch.object(FredData,"__init__", lambda x, z:None):
+            self.d = FredData('')
+            self.d.series= 'DFII10'
+            self.d.df = pd.read_pickle(test_data)
+        
+    def testLastData(self):
+        self.assertEqual(self.d.last_data(),2.24)

@@ -2,6 +2,7 @@
 #from findash.index import TickerData
 from findash.data import FredData
 from findash.data import GDPData
+from findash.data import DFII10Data
 
 
 #i = TickerData("META")
@@ -15,8 +16,6 @@ load_dotenv()
 
 
 
-r = FredData("GDP")
-r.print()
-
-g = GDPData()
-g.print()
+#r = FredData("GDP")
+#r = FredData("THREEFYTP10")
+r = DFII10Data()

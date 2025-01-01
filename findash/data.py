@@ -35,11 +35,22 @@ class FredData:
         self.series = series
         self.df = pf.series.get_series(series_id=self.series)
 
-    def print(self):
-        print(self.df)
+    def last_data(self):
+         return round(float(self.df['value'].iloc[-1]),2)
+
 
 
 
 class GDPData(FredData):
     def __init__(self) -> None:
         super().__init__("GDP")
+
+
+class THREEFYTP10Data(FredData):
+    def __init__(self) -> None:
+        super().__init__("THREEFYTP10")
+
+
+class DFII10Data(FredData):
+    def __init__(self) -> None:
+        super().__init__("DFII10")
