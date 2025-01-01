@@ -26,6 +26,8 @@ def stock_line_data(ticker):
 
     # Last price
     last_price = tick.last_price()
+    if last_price == None:
+        last_price = 'na'
     line.append(str(last_price))
 
     # Price history 
@@ -51,14 +53,15 @@ def stock_line_data(ticker):
     # Bolinger
     l = []
     low, mid, high = tick.bolinger()
-    if mid > last_price:
-        mid = red(mid)
+    if last_price != 'na':
+        if mid > last_price:
+            mid = red(mid)
 
-    if low > last_price:
-        low = red(low)
-    
-    if last_price > high:
-        high = green(high)
+        if low > last_price:
+            low = red(low)
+        
+        if last_price > high:
+            high = green(high)
     l = [low, mid, high] 
     line.append("/".join(str(z) for z in l ))
 
