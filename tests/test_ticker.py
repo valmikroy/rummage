@@ -19,12 +19,14 @@ class TestTicker(unittest.TestCase):
         test_data = dir_path + "/fixtures/meta_ticker.data"
         with patch.object(TickerData,"__init__", lambda x, z:None):
             self.ticker = TickerData('')
-            self.ticker.stock = 'META'
+            self.ticker.name = 'META'
             self.ticker.history = 2
             self.ticker.df = pd.read_pickle(test_data)
         
     def testLastData(self):
         self.assertEqual(self.ticker.last_price(),591.24)
+        self.assertEqual(self.ticker.bolinger(),[582.33, 609.67, 637.0])
+        self.assertEqual(self.ticker.rsi(),40.15)
 
 
 
