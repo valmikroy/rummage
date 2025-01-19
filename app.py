@@ -3,6 +3,7 @@ from findash.data import TickerData
 from findash.data import FredData
 from findash.data import GDPData
 from findash.data import DFII10Data
+from findash.data import THREEFYTP10Data
 
 
 from datetime import date
@@ -12,6 +13,7 @@ from termcolor import colored, cprint
 from tabulate import tabulate
 
 import os 
+import argparse
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -43,7 +45,7 @@ def stock_line_data(ticker):
     # MACD
     l = []
     macd, signal = tick.macd()
-    if signal < 0 and signal < macd:
+    if signal < macd:
         l = [left_padding(macd), red(signal)]  
     else:
         l = [left_padding(macd), green(signal)]  
@@ -94,8 +96,13 @@ def green(v):
     v = left_padding(v)
     return colored(v,'green',attrs=['reverse', 'blink'])
 
-def left_padding(v,pad=6):
-    return ('{: >6}'.format(str(v)))
+def left_padding(v):
+    return ('{:>8}'.format(str(v)))
+
+
+
+
+
 
 #####
 def stock_watch(tickers=[]):
@@ -110,8 +117,60 @@ def stock_watch(tickers=[]):
     print(tabulate(all_data,headers='firstrow'))
 
 
+
+def fred_line(series: str):
+    line = []
+    line.append(series)
+    f = FredData(series)
+    last_data = f.last_data()
+    if last_data == None:
+        last_data = 'na'
+    line.append(last_data)
+
+    # MACD
+#    l = []
+#    macd, signal = f.macd()
+#    if signal < macd:
+#        l = [left_padding(macd), red(signal)]  
+#    else:
+#        l = [left_padding(macd), green(signal)]  
+#    line.append("/".join(str(z) for z in l ))
+
+
+    # Bolinger
+    l = []
+    low, mid, high = f.bolinger()
+    if last_data != 'na':
+        if mid > last_data:
+            mid = red(mid)
+
+        if low > last_data:
+            low = red(low)
+        
+        if last_data > high:
+            high = green(high)
+    l = [low, mid, high] 
+    line.append("/".join(str(z) for z in l ))
+
+    return line
+
+def fred_print():
+    all_data = []
+    all_data.append(['Ticker', 'Last','low/mid/high'])
+    all_data.append(fred_line("THREEFYTP10"))
+    all_data.append(fred_line("DFII10"))
+    all_data.append(fred_line("GDP"))
+    print(tabulate(all_data,headers='firstrow'))
+
+
+
+
+
 print("\n")
 print(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+
+
+
 index = {
     "VIX" : "^VIX",
     "GVZ" : "^GVZ"
@@ -129,12 +188,33 @@ stock = {
     "Index": ["CL=F","NG=F"]
 }
 
-for key in stock:
-    print("-->",key)
-    stock_watch(stock[key])
+
+
+
+parser = argparse.ArgumentParser(description='Optional app description')
+
+# Required positional argument
+parser.add_argument('pos_arg', type=str, nargs='*',
+                    help='A required positional argument')
+args = parser.parse_args()
+
+
+if args.pos_arg == 'dash':
+    for key in stock:
+        print("-->",key)
+        stock_watch(stock[key])
+        print("\n")
+elif args.pos_arg == 'index':
+    for key in index:
+        print(" ",key," ", TickerData(index[key]).last_price(),end='')
     print("\n")
-
-
-for key in index:
-    print(" ",key," ", TickerData(index[key]).last_price(),end='')
-print("\n")
+else :
+#    for key in stock:
+#        print("-->",key)
+#        stock_watch(stock[key])
+#        print("\n")
+    fred_print()
+    print("\n")
+    for key in index:
+        print(" ",key," ", TickerData(index[key]).last_price(),end='')
+    print("\n")

@@ -1,6 +1,6 @@
-def bolinger(df,win=20):
-    df['SMA'] = df['Close'].rolling(window=win).mean()
-    df['SD'] = df['Close'].rolling(window=win).std()
+def bolinger(df,col,win=20):
+    df['SMA'] = df[col].rolling(window=win).mean()
+    df['SD'] = df[col].rolling(window=win).std()
     df['BB_UPPER'] = df['SMA'] + 2 * df['SD']
     df['BB_LOWER'] = df['SMA'] - 2 * df['SD']
 
@@ -11,8 +11,8 @@ def bolinger(df,win=20):
     return [ bb_lower, bb_mean, bb_upper]
 
 
-def rsi(df,win=14):
-    change = df['Close'].diff()
+def rsi(df,col,win=14):
+    change = df[col].diff()
     change.dropna(inplace=True)
 
     # two copies 
@@ -40,9 +40,9 @@ def rsi(df,win=14):
     return round(rsi.iloc[-1],2)
 
 
-def macd(df, fast=12, slow=26, signal=9):
-    df[f'EMA{fast}'] = df['Close'].ewm(span=fast, adjust=False).mean()
-    df[f'EMA{slow}'] = df['Close'].ewm(span=slow, adjust=False).mean()
+def macd(df,col, fast=12, slow=26, signal=9):
+    df[f'EMA{fast}'] = df[col].ewm(span=fast, adjust=False).mean()
+    df[f'EMA{slow}'] = df[col].ewm(span=slow, adjust=False).mean()
     df['MACD'] = df[f'EMA{fast}'] - df[f'EMA{slow}']
     df['sline'] = df['MACD'].ewm(span=signal, adjust=False).mean()
 
@@ -72,17 +72,5 @@ def history(df,col):
     return [ p_week, p_month, p_month_3, p_year ]
 
 
-def vol_history(df):
-    return history(df,'Volume')
-
-def price_history(df):
-    return history(df,'Close')
-
 def last_entry(df,col):
     return round(float(df[col].iloc[-1]),2) 
-
-def last_price(df):
-    return last_entry(df,'Close')    
-
-def last_volume(df):
-    return last_entry(df,'Volume')    
