@@ -72,5 +72,27 @@ def history(df,col):
     return [ p_week, p_month, p_month_3, p_year ]
 
 
+def history_alt(df,col,freq=[-1,-2,-5,-20,-60,-240]):
+    # -1 current
+    # -2 previous
+    # -5 week ago
+    # -20 month ago 
+    # -60 3 months ago 
+    # -240 a year ago 
+
+    d_0 = [ df['date'].iloc[freq[0]], round(float(df[col].iloc[freq[0]]),2) ]
+    d_1 = [ df['date'].iloc[freq[1]], round(float(df[col].iloc[freq[1]]),2) ] 
+    d_2 = [ df['date'].iloc[freq[2]], round(float(df[col].iloc[freq[2]]),2) ]
+    d_3 = [ df['date'].iloc[freq[3]], round(float(df[col].iloc[freq[3]]),2) ]
+    d_4 = [ df['date'].iloc[freq[4]], round(float(df[col].iloc[freq[4]]),2) ]
+
+
+    p_1 = round(((d_0[1] - d_1[1]) / d_0[1]) * 100,2)
+    p_2 = round(((d_0[1] - d_2[1]) / d_0[1]) * 100,2)
+    p_3 = round(((d_0[1] - d_3[1]) / d_0[1]) * 100,2)
+    p_4 = round(((d_0[1] - d_4[1]) / d_0[1]) * 100,2)
+
+    return [[d_0,d_1,d_2,d_3,d_4],[p_1,p_2,p_3,p_4]]
+
 def last_entry(df,col):
     return round(float(df[col].iloc[-1]),2) 

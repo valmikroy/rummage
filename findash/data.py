@@ -81,6 +81,7 @@ class FredData:
         return tech.macd(df,'value',fast*5,slow*5,signal*5)    
 
 
+
 # GDP data released twice a week so every 3 days
 class GDPData(FredData):
     def __init__(self) -> None:
@@ -97,9 +98,23 @@ class THREEFYTP10Data(FredData):
     def __init__(self) -> None:
         super().__init__("THREEFYTP10")
 
-
 # real rates
 # Data point available for each day
 class DFII10Data(FredData):
     def __init__(self) -> None:
         super().__init__("DFII10")
+
+# Data point is available for each month
+class CPIAUCSLData(FredData):
+    def __init__(self) -> None:
+        super().__init__("CPIAUCSL")
+
+# non-farm payroll data, data available each month
+class PAYEMSData(FredData):
+    def __init__(self) -> None:
+        super().__init__("PAYEMS")
+
+# Personal consumption expenditure data available each month
+class PCEData(FredData):
+    def __init__(self) -> None:
+        super().__init__("PCE")
