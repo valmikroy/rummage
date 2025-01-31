@@ -21,7 +21,7 @@ def stock_line_data(ticker):
     line = []
     line.append(ticker)
 
-    tick = TickerData(ticker,400)
+    tick = TickerData(ticker,370)
 
 
     # Last price
@@ -121,11 +121,11 @@ index = {
 stock = {
     "Mag7": ['AAPL', 'MSFT', 'AMZN', 'GOOG', 'META', 'TSLA', 'NVDA'],
     "Sector": ['SPY', 'QQQ','XLV','XLU','XLP','XLRE','XLC','XLF','XLK','XLY','XLE', 'XLB', 'XLI', 'ITA', 'IYR', 'SOXX'],
-    "Speciality" : ['MGK', 'VIG', 'UNH', 'PFE'],
+    "Speciality" : ['MGK', 'VIG'],
     "Commodity": ['GLDM', 'SLV', 'PPLT', 'CPER', 'URA', 'UNG', 'USO'],
     "Currency": ['BTC-USD','ETH-USD','UUP'],
-    "Fixed_Income": ['SHY', 'IEI', 'IEF', 'TLT', 'SPSB', 'SLQD'],
-    "Country": ['KWEB', 'INDA', 'EWJ', 'EEM', 'EMXC', 'ACWX'],
+    "Fixed_Income": ['SHY', 'IEI', 'IEF', 'TLT', 'SLQD'],
+    "Country": ['EWC','KWEB', 'INDA', 'EWJ', 'EEM', 'EMXC', 'ACWX'],
     "Index": ["CL=F","NG=F"]
 }
 
