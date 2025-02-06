@@ -17,8 +17,6 @@ RUN case ${TARGETPLATFORM} in \
  wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
  tar -xzf ta-lib-0.4.0-src.tar.gz && \
  cd ta-lib && \
- wget 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' -O './config.guess' && \
- wget 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD' -O './config.sub' && \
  ./configure --prefix=/usr --build=${ARCH_OPT} && \
  make && \
  make install && \
