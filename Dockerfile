@@ -4,16 +4,22 @@ FROM python:3.10
 # Set the working directory inside the container
 WORKDIR /app
 
+ARG TARGETPLATFORM
 
 RUN apt update && apt upgrade -y && \
  apt autoremove -y && \
- apt-get install wget sudo build-essential -y && \
+ apt-get install wget sudo build-essential -y 
+
+RUN case ${TARGETPLATFORM} in \
+        "linux/amd64")  ARCH_OPT=x86_64-unknown-linux-gnu  ;; \
+        "linux/arm64")  ARCH_OPT=aarch64-unknown-linux-gnu  ;; \
+    esac && \
  wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
  tar -xzf ta-lib-0.4.0-src.tar.gz && \
  cd ta-lib && \
  wget 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' -O './config.guess' && \
  wget 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD' -O './config.sub' && \
- ./configure --prefix=/usr && \
+ ./configure --prefix=/usr --build=${ARCH_OPT} && \
  make && \
  make install && \
  rm -rf ta-lib && \
