@@ -66,7 +66,7 @@ def stock_line_data(ticker):
     line.append("/".join(str(z) for z in l ))
 
     # RSI
-    rsi = tick.rsi()
+    rsi = int(tick.rsi())
     if rsi > 50:
         line.append(green(rsi))
     else:
@@ -121,11 +121,11 @@ index = {
 stock = {
     "Mag7": ['AAPL', 'MSFT', 'AMZN', 'GOOG', 'META', 'TSLA', 'NVDA'],
     "Sector": ['SPY', 'QQQ','XLV','XLU','XLP','XLRE','XLC','XLF','XLK','XLY','XLE', 'XLB', 'XLI', 'ITA', 'SOXX'],
-    "Speciality" : ['MGK', 'VIG'],
+    "Speciality" : ['BTAL','MGK', 'VIG'],
     "Commodity": ['GLDM', 'SLV', 'PPLT', 'CPER', 'URA', 'UNG', 'USO'],
     "Currency": ['IBIT','UUP'],
-    "Fixed_Income": ['SHY', 'IEI', 'IEF', 'TLT', 'SLQD'],
-    "Country": ['EWC','KWEB', 'INDA', 'EWJ', 'EEM'],
+    "Fixed_Income": ['SHY', 'IEI', 'IEF', 'TLT','VWOB'],
+    "Country": ['KWEB', 'INDA', 'EWJ' ],
     "Index": ["CL=F","NG=F"]
 }
 
